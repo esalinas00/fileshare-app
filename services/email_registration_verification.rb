@@ -6,7 +6,7 @@ class EmailRegistrationVerification
     token_encrypted = SecureMessage.encrypt(registration)
 
     Pony.mail(to: registration[:email],
-              subject: "Your ShareConfig Account is Almost Ready",
+              subject: "Your ShareFiles Account is Almost Ready",
               html_body: registration_email(token_encrypted))
   end
 

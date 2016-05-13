@@ -12,6 +12,7 @@ class ShareFilesApp < Sinatra::Base
   end
 
   get '/' do
+    APIServerWakeUp.call
     slim :home
   end
 end

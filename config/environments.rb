@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'pony'
-require 'rack/ssl-enforcer'
- 
+
 configure :production do
  use Rack::SslEnforcer
 end

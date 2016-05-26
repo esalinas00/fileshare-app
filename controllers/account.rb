@@ -4,6 +4,7 @@ require 'sinatra'
 class ShareFilesApp < Sinatra::Base
   get '/account/:username' do
     if @current_account && @current_account['username'] == params[:username]
+      @auth_token = session[:auth_token]
       slim(:account)
     else
       slim(:login)
@@ -22,9 +23,11 @@ class ShareFilesApp < Sinatra::Base
       halt
     end
 
-    @current_account = FindAuthenticatedAccount.call(credentials)
+    auth_account = FindAuthenticatedAccount.call(credentials)
 
-    if @current_account
+    if auth_account
+      @current_account = auth_account['account']
+      session[:auth_token] = auth_account['auth_token']
       session[:current_account] = SecureMessage.encrypt(@current_account)
       flash[:notice] = "Welcome back #{@current_account['username']}"
       redirect '/'
@@ -36,7 +39,7 @@ class ShareFilesApp < Sinatra::Base
 
   get '/logout/?' do
     @current_account = nil
-    session[:current_account] = nil
+    session.clear
     flash[:notice] = 'You have logged out - please login again to use this site'
     slim :login
   end

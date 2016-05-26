@@ -1,0 +1,13 @@
+h1 Folders
+table class="table"
+  thead
+    tr
+      th Folder name
+      th Folder URL
+  tbody
+    - @folders.each do |fol|
+      tr
+        td
+          a href="/accounts/#{@current_account['username']}/folders/#{fol[:id]}" #{fol[:name]}
+          td
+            a href="#{fol[:folder_url]}" #{fol[:folder_url]}

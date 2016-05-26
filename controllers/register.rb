@@ -6,13 +6,20 @@ class ShareFilesApp < Sinatra::Base
   end
 
   post '/register/?' do
+    registration = Registration.call(params)
+    if registration.failure?
+      flash[:error] = 'Please enter a valid username and email'
+      redirect 'register'
+      halt
+    end
+
     begin
-      EmailRegistrationVerification.call(
-        username: params[:username],
-        email: params[:email])
+      EmailRegistrationVerification.call(registration)
       redirect '/'
     rescue => e
-      puts "FAIL EMAIL: #{e}"
+      logger.error "FAIL EMAIL: #{e}"
+      flash[:error] = 'Unable to send email verification -- please '\
+                      'check you have entered the right address'
       redirect '/register'
     end
   end
@@ -25,18 +32,26 @@ class ShareFilesApp < Sinatra::Base
   end
 
   post '/register/:token_secure/verify' do
-    redirect "/register/#{params[:token_secure]}/verify" unless
-      (params[:password] == params[:password_confirm]) &&
-      !params[:password].empty?
+    passwords = Passwords.call(params)
+    if passwords.failure?
+      flash[:error] = passwords.messages.values.join('; ')
+      redirect "/register/#{params[:token_secure]}/verify"
+      halt
+    end
 
     new_account = SecureMessage.decrypt(params[:token_secure])
-
     result = CreateVerifiedAccount.call(
       username: new_account['username'],
       email: new_account['email'],
-      password: params[:password])
-
-    puts "RESULT: #{result}"
+      password: passwords[:password])
     result ? redirect('/login') : redirect('/register')
+
+    if result
+      flash[:notice] = "Welcome Back #{new_account['username']}! "
+      redirect('/login')
+    else
+      flash[:error] = 'Registration failed!'
+      redirect('/register')
+    end
   end
 end

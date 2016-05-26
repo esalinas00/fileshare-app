@@ -44,10 +44,9 @@ class ShareFilesApp < Sinatra::Base
       username: new_account['username'],
       email: new_account['email'],
       password: passwords[:password])
-    result ? redirect('/login') : redirect('/register')
 
     if result
-      flash[:notice] = "Welcome Back #{new_account['username']}! "
+      flash[:notice] = "Registration Success!! Please Login"
       redirect('/login')
     else
       flash[:error] = 'Registration failed!'

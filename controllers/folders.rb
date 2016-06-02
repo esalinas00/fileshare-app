@@ -7,8 +7,29 @@ class ShareFilesApp < Sinatra::Base
       @folders = GetAllFolders.call(current_account: @current_account,
                                       auth_token: session[:auth_token])
     end
+    puts @folders
 
     @folders ? slim(:all_folders) : redirect('/login')
+  end
+
+  get '/accounts/:username/upload' do
+    slim(:upload)
+  end
+
+  post '/accounts/:username/upload' do
+    if @current_account && @current_account['username'] == params[:username]
+      # File.open('uploads/' + params['fileToUpload'][:filename], "w") do |f|
+      #   f.write(params['fileToUpload'][:tempfile].read)
+      # end
+
+      # get User ID
+      user_id = GetUserID.call(username: @current_account['username'])
+
+      # get Folder ID
+
+      puts params['fileToUpload'][:tempfile].read
+      return "The file was successfully uploaded!"
+    end
   end
 
   get '/accounts/:username/folders/:folder_id' do

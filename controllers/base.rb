@@ -24,7 +24,14 @@ class ShareFilesApp < Sinatra::Base
   end
 
   get '/' do
-    APIServerWakeUp.call
     slim :home
+  end
+
+  get '/api/wakeup' do
+    if APIServerWakeUp.call
+      status 200
+    else
+      status 404
+    end
   end
 end

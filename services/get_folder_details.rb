@@ -8,7 +8,7 @@ class GetFolderDetails
     response.code == 200 ? extract_folder_details(response.parse) : nil
   end
 
-  private
+  private_class_method
 
   def self.extract_folder_details(folder_data)
     folder = folder_data['data']

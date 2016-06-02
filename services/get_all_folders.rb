@@ -8,7 +8,7 @@ class GetAllFolders
     response.code == 200 ? extract_folders(response.parse) : nil
   end
 
-  private
+  private_class_method
 
   def self.extract_folders(folders)
     folders['data'].map do |proj|

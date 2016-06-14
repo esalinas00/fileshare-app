@@ -14,9 +14,6 @@ class ShareFilesApp < Sinatra::Base
   post '/accounts/:username/folders' do
     folders_url = "/accounts/#{@current_account['username']}/folders"
     if @current_account && @current_account['username'] == params[:username]
-      # TODO Created folder logic
-      # get User ID
-      # user_id = GetUserID.call(username: @current_account['username'])
       folders_url = "/accounts/#{@current_account['username']}/folders"
       filename = "#{Faker::App.name}"
 

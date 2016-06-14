@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'faker'
 
 # Base class for FileShare Web Application
 class ShareFilesApp < Sinatra::Base
@@ -7,35 +8,38 @@ class ShareFilesApp < Sinatra::Base
       @folders = GetAllFolders.call(current_account: @current_account,
                                       auth_token: session[:auth_token])
     end
-    puts @folders
-
     @folders ? slim(:all_folders) : redirect('/login')
   end
 
-  get '/accounts/:username/upload' do
-    slim(:upload)
-  end
-
-  post '/accounts/:username/upload' do
+  post '/accounts/:username/folders' do
+    folders_url = "/accounts/#{@current_account['username']}/folders"
     if @current_account && @current_account['username'] == params[:username]
-      # File.open('uploads/' + params['fileToUpload'][:filename], "w") do |f|
-      #   f.write(params['fileToUpload'][:tempfile].read)
-      # end
-
+      # TODO Created folder logic
       # get User ID
-      user_id = GetUserID.call(username: @current_account['username'])
+      # user_id = GetUserID.call(username: @current_account['username'])
+      folders_url = "/accounts/#{@current_account['username']}/folders"
+      filename = "#{Faker::App.name}"
 
-      # get Folder ID
+      new_folder = CreateNewFolder.call(
+        owner: @current_account,
+        name: filename,
+        folder_url: nil)
 
-      puts params['fileToUpload'][:tempfile].read
-      return "The file was successfully uploaded!"
+      if new_folder
+        flash[:notice] = 'The folder was successfully created!'
+        redirect folders_url + "/#{new_folder['id']}"
+      else
+        flash[:error] = 'Failed to create folder!'
+        redirect "/accounts/#{params[:username]}/folders"
+      end
     end
   end
 
   get '/accounts/:username/folders/:folder_id' do
     if @current_account && @current_account['username'] == params[:username]
       @folder = GetFolderDetails.call(folder_id: params[:folder_id],
-                                        auth_token: session[:auth_token])
+                                      auth_token: session[:auth_token])
+
       if @folder
         slim(:folder)
       else

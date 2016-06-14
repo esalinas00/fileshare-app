@@ -1,0 +1,52 @@
+h2
+  == "#{@folder[:name]}"
+
+br
+
+div class="row"
+  div class="col-xs-4"
+    form action="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files" enctype="multipart/form-data" method="post" 
+      .fileinput.fileinput-new.input-group data-provides="fileinput" 
+        .form-control data-trigger="fileinput" 
+          i.glyphicon.glyphicon-file.fileinput-exists
+          span.fileinput-filename
+        span.input-group-addon.btn.btn-default.btn-file
+          span.fileinput-new Select file
+          span.fileinput-exists Change
+          input name="fileToUpload" type="file" id="fileToUpload"
+        a.input-group-addon.btn.btn-default.fileinput-exists data-dismiss="fileinput" href="#" Remove
+
+      / input name="fileToUpload" type="file" id="fileToUpload"
+      / input name="submit" type="submit" value="Upload"
+      br
+      button name="submit" type="submit" value="Upload" class="btn btn-success" 
+        i.fa.fa-plus aria-hidden="true"  Upload
+
+    / div class="col-xs-9"
+    /   dd class="blockquote"
+    /     a href="#{@folder[:repo_url]}" #{@folder[:repo_url]}
+
+br
+
+table class="table"
+  thead
+    tr
+      th File Name
+      th Type
+      th Download
+      th Share
+  tbody
+    - unless @folder[:files].empty?
+      - @folder[:files].each do |f|
+        tr
+          td #{f[:filename]}
+          td #{f[:description]}
+          td
+            a href="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files/#{f[:id]}" 
+              i.fa.fa-download aria-hidden="true"  Download
+          td Share
+    - else
+        p
+         | No items found.  Please add some files. Thank you!
+/ div class="col-xs-4"
+/   button type="button" class="btn btn-success" data-toggle="modal" data-target="#newConfigurationModal" + New File

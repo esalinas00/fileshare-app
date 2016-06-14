@@ -1,9 +1,0 @@
-/ button.btn.btn-default.btn-lg type="button" id='upload-btn'
-/   span.glyphicon.glyphicon-cloud-upload aria-hidden="true" 
-/   |  Upload
-
-/ form action="http://localhost:9292/api/v1/folders/1/files" enctype="multipart/form-data" method="post" 
-form action="/accounts/#{@current_account['username']}/upload" enctype="multipart/form-data" method="post" 
-  | Select image to upload:
-  input name="fileToUpload" type="file" id="fileToUpload"
-  input name="submit" type="submit" value="Upload"

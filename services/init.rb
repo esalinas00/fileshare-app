@@ -9,3 +9,4 @@ require_relative 'get_file_details'
 
 require_relative 'create_new_folder'
 require_relative 'create_new_file'
+require_relative 'add_collaborator_to_folder'

@@ -47,4 +47,23 @@ class ShareFilesApp < Sinatra::Base
       redirect '/login'
     end
   end
+
+  post '/accounts/:username/folders/:folder_id/collaborators/?' do
+    # halt_if_incorrect_user(params)
+
+    collaborator = AddCollaboratorToFolder.call(
+      collaborator_email: params[:email],
+      folder_id: params[:folder_id])
+
+    # puts "COLLAB REQUESTED: #{collaborator}"
+    if collaborator
+      account_info = "#{collaborator['username']} (#{collaborator['email']})"
+      flash[:notice] = "Added #{account_info} to the project"
+    else
+      flash[:error] = "Could not add #{params['email']} to the project"
+    end
+
+    redirect back
+  end
+
 end

@@ -17,7 +17,7 @@ class GetFolderDetails
     files = content.map do |f|
       {
         id: f['id'],
-        name: f['data']['name'],
+        filename: f['data']['filename'],
         description: f['data']['description']
       }
     end

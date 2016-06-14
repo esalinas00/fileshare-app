@@ -32,6 +32,8 @@ GEM
       dry-equalizer (~> 0.2)
       dry-logic (~> 0.2, >= 0.2.2)
       dry-types (~> 0.6, >= 0.6.0)
+    faker (1.6.3)
+      i18n (~> 0.5)
     ffi (1.9.10)
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
@@ -44,6 +46,7 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
+    i18n (0.7.0)
     inflecto (0.0.2)
     jose (1.1.1)
       hamster
@@ -110,6 +113,7 @@ PLATFORMS
 DEPENDENCIES
   config_env
   dry-validation
+  faker
   http
   jose
   pony

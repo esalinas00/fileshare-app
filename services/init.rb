@@ -7,6 +7,5 @@ require_relative 'get_all_folders'
 require_relative 'get_folder_details'
 require_relative 'get_file_details'
 
-require_relative 'get_user_id'
 require_relative 'create_new_folder'
 require_relative 'create_new_file'

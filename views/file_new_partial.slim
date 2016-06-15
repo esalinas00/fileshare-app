@@ -1,0 +1,24 @@
+div id="newFileModal" class="modal fade" role="dialog"
+  div class="modal-dialog"
+    div class="modal-content"
+      div class="modal-header"
+        h4 Upload a File
+      div class="modal-body"
+        form role="form" action="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files" enctype="multipart/form-data" method="post" id='new-file-form'
+          div class="form-group"
+            label for='file_input' Select a file:
+          .fileinput.fileinput-new.input-group data-provides="fileinput" 
+            .form-control data-trigger="fileinput" 
+              i.glyphicon.glyphicon-file.fileinput-exists
+              span.fileinput-filename
+            span.input-group-addon.btn.btn-default.btn-file
+              span.fileinput-new Select file
+              span.fileinput-exists Change
+              input name="fileToUpload" type="file" id="fileToUpload"
+            a.input-group-addon.btn.btn-default.fileinput-exists data-dismiss="fileinput" href="#" Remove
+          
+          div class="row" 
+            div class="col-xs-10"
+              button type="button" class="btn btn-default" data-dismiss="modal" Cancel
+            div class="col-xs-1"
+              button name="submit" type="submit" value="Upload" class="btn btn-success" Done

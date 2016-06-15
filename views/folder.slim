@@ -1,76 +1,62 @@
 h2
-  == "#{@folder[:name]}"
+  == "#{@folder['name']}"
 
-/ div class="row"
-/   div class="col-xs-4"
-/     form action="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files" enctype="multipart/form-data" method="post" 
-/       .fileinput.fileinput-new.input-group data-provides="fileinput" 
-/         .form-control data-trigger="fileinput" 
-/           i.glyphicon.glyphicon-file.fileinput-exists
-/           span.fileinput-filename
-/         span.input-group-addon.btn.btn-default.btn-file
-/           span.fileinput-new Select file
-/           span.fileinput-exists Change
-/           input name="fileToUpload" type="file" id="fileToUpload"
-/         a.input-group-addon.btn.btn-default.fileinput-exists data-dismiss="fileinput" href="#" Remove
-/ 
-/       / input name="fileToUpload" type="file" id="fileToUpload"
-/       / input name="submit" type="submit" value="Upload"
-/       br
-/       button name="submit" type="submit" value="Upload" class="btn btn-success" 
-/         i.fa.fa-plus aria-hidden="true"  Upload
-/ 
-/     / div class="col-xs-9"
-/     /   dd class="blockquote"
-/     /     a href="#{@folder[:repo_url]}" #{@folder[:repo_url]}
-
-table class="table table-striped table-hover"
-  thead
-    tr
-      th File Name
-      th Type
-      th Download
-      th Share
-  tbody
-    - unless @folder[:files].empty?
-      - @folder[:files].each do |f|
+div class="panel panel-info"
+  div class="panel-heading" Files
+  div class="panel-body"
+    table class="table table-striped table-hover"
+      thead
         tr
-          td #{f[:filename]}
-          td #{f[:description]}
-          td
-            a href="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files/#{f[:id]}" 
-              i.fa.fa-download aria-hidden="true"  Download
-          td Share
-    - else
-        p
-         | No items found.  Please add some files. Thank you!
-/ div class="col-xs-4"
-/   button type="button" class="btn btn-success" data-toggle="modal" data-target="#newConfigurationModal" + New File
+          th File Name
+          th File Type
+          th Download
+          th Share
+      tbody
+        - unless @folder['files'].empty?
+          - @folder['files'].each do |f|
+            tr
+              td #{f['data']['filename']}
+              td #{f['data']['description']}
+              td
+                a href="/accounts/#{@current_account['username']}/folders/#{@folder['id']}/files/#{f['id']}" 
+                  i.fa.fa-download aria-hidden="true"  Download
+              td Share
+        - else
+            p
+             | No items found.  Please add some files. Thank you!
+    button type="button" class="btn btn-success" data-toggle="modal" data-target="#newFileModal"
+      i.fa.fa-plus aria-hidden="true"  Add
 
-div class="row" 
-  div class="col-xs-1"
-    button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFileModal"
-      i.fa.fa-plus aria-hidden="true"  Upload
-  div class="col-xs-1"
-    button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newCollaboratorModal"
-      i.fa.fa-share aria-hidden="true"  Share
-  / div class="col-lg-3"
-  /   div class="panel panel-default"
-  /     div class="panel-heading" Collaborators
-  /     div class="panel-body"
-  /       - if @folder['contributors'].empty?
-  /         span class="small" There are no collaborators yet
-  /       ul class="list-group"
-  /         - @folder['contributors'].each do |contributor|
-  /           li class="list-group-item clearfix"
-  /             '  #{contributor['username']}
-  /             - unless [@folder['owner']['id'], @current_account['id']].include? contributor['id']
-  /               span class="pull-right"
-  /                 button type="button" class="btn btn-xs btn-default"
-  /                   span class="glyphicon glyphicon-remove"
-  /       - if @folder['owner']['id'] == @current_account['id']
-  /         button type="button" class="btn btn-success" data-toggle="modal" data-target="#newCollaboratorModal" + Add Collaborator
-
+div class="row"
+  div class="col-md-6"
+    div class="panel panel-info"
+      div class="panel-heading" Collaborators
+      div class="panel-body"
+        table class="table table-striped table-hover"
+          thead
+            tr
+              th Username
+              th Email
+              th Owner
+            tbody
+              tr
+                td #{@folder['owner']['username']}
+                td #{@folder['owner']['email']}
+                td 
+                  i.fa.fa-check aria-hidden="true"
+              - unless @folder['collaborators'].empty?
+                - @folder['collaborators'].each do |contributor|
+                  tr
+                    td #{contributor['username']}
+                    td #{contributor['email']}
+                    td 
+                      i.fa.fa-times aria-hidden="true"
+              - else
+                p 
+                  | There are no collaborators yet.
+        - if @folder['owner']['id'] == @current_account['id']
+          button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newCollaboratorModal"
+            i.fa.fa-share aria-hidden="true"  Share
 
 include :collaborator_new_partial
 include :file_new_partial

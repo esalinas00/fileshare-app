@@ -53,7 +53,8 @@ class ShareFilesApp < Sinatra::Base
 
     collaborator = AddCollaboratorToFolder.call(
       collaborator_email: params[:email],
-      folder_id: params[:folder_id])
+      folder_id: params[:folder_id],
+      auth_token: session[:auth_token])
 
     # puts "COLLAB REQUESTED: #{collaborator}"
     if collaborator

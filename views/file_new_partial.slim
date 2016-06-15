@@ -4,7 +4,7 @@ div id="newFileModal" class="modal fade" role="dialog"
       div class="modal-header"
         h4 Upload a File
       div class="modal-body"
-        form role="form" action="/accounts/#{@current_account['username']}/folders/#{@folder[:id]}/files" enctype="multipart/form-data" method="post" id='new-file-form'
+        form role="form" action="/accounts/#{@current_account['username']}/folders/#{@folder['id']}/files" enctype="multipart/form-data" method="post" id='new-file-form'
           div class="form-group"
             label for='file_input' Select a file:
           .fileinput.fileinput-new.input-group data-provides="fileinput" 

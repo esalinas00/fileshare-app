@@ -1,30 +1,27 @@
-h1 Folders
-
-br
-
-form method='post' action='/accounts/#{@current_account['username']}/folders' id='form-create-folder'  
-  button.btn.btn-default.btn type='submit' id='button-create-folder' class="btn btn-primary"
-    i.fa.fa-plus aria-hidden="true"  Create a Folder
-
-br
-
-table class="table"
-  thead
-    tr
-      th Folder ID
-      th Folder name
-      th Folder URL
-      th Status
-  tbody
-    - @folders.each do |fol|
-      tr
-        td 
-          == fol[:id]
-        td
-          a href="/accounts/#{@current_account['username']}/folders/#{fol[:id]}" #{fol[:name]}
-        td
-          a href="#{fol[:folder_url]}" #{fol[:folder_url]}
-        td 
-          i.fa.fa-cloud-upload aria-hidden="true"
+h1 Vaults
+div class="panel panel-success"
+  div class="panel-heading" Folder Vaults
+  div class="panel-body"
+    table class="table"
+      thead
+        tr
+          th Vaults ID
+          th Vaults Name
+          th Vaults Path
+          th Status
+      tbody
+        - @folders.each do |fol|
+          tr
+            td 
+              == fol[:id]
+            td
+              a href="/accounts/#{@current_account['username']}/folders/#{fol[:id]}" #{fol[:name]}
+            td
+              == "/accounts/#{@current_account['username']}/folders/#{fol[:id]}"
+            td 
+              i.fa.fa-cloud-upload aria-hidden="true"
+    form method='post' action='/accounts/#{@current_account['username']}/folders' id='form-create-folder'
+      button.btn.btn-default.btn type='submit' id='button-create-folder' class="btn btn-primary"
+        i.fa.fa-plus aria-hidden="true"  Create a Vaults
 
     

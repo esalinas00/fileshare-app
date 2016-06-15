@@ -23,7 +23,7 @@ class ShareFilesApp < Sinatra::Base
         folder_url: nil)
 
       if new_folder
-        flash[:notice] = 'The folder was successfully created!'
+        flash[:notice] = "The folder '#{filename}' was successfully created!"
         redirect folders_url + "/#{new_folder['id']}"
       else
         flash[:error] = 'Failed to create folder!'
@@ -58,9 +58,9 @@ class ShareFilesApp < Sinatra::Base
     # puts "COLLAB REQUESTED: #{collaborator}"
     if collaborator
       account_info = "#{collaborator['username']} (#{collaborator['email']})"
-      flash[:notice] = "Added #{account_info} to the project"
+      flash[:notice] = "Added #{account_info} to the vault"
     else
-      flash[:error] = "Could not add #{params['email']} to the project"
+      flash[:error] = "Could not add #{params['email']} to the vault"
     end
 
     redirect back

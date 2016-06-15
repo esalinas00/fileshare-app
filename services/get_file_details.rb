@@ -18,7 +18,10 @@ class GetFileDetails
     # FileUtils.mkdir_p('temp_downloaded')
 
     filename = file_data['data']['file']['data']['filename']
-    enc = file_data['data']['file']['data']['document_base64']
+    # enc = file_data['data']['file']['data']['document_base64']
+    # plain = Base64.strict_decode64(enc)
+
+    enc = file_data['data']['file']['data']['document']
     plain = Base64.strict_decode64(enc)
 
     # path = "./temp_downloaded/#{filename}"

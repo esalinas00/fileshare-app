@@ -23,6 +23,8 @@ div class="container"
         div id="pk" class="collapse well"
           pre class="force-wrap"
             == @pk
+          button type="button" class="btn btn-success" data-toggle="modal" data-target="#newPKModal"
+            i.fa.fa-plus aria-hidden="true"  Update Public Key
     - else
       button type="button" class="btn btn-success" data-toggle="modal" data-target="#newPKModal"
         i.fa.fa-plus aria-hidden="true"  Import Public Key

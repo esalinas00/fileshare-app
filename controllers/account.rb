@@ -6,10 +6,10 @@ class ShareFilesApp < Sinatra::Base
     if @current_account && @current_account['username'] == params[:username]
       @auth_token = session[:auth_token]
       
-      @pk = GetPublicKey(
+      @pk = GetPublicKey.call(
         current_account: @current_account,
         auth_token: session[:auth_token])
-      
+
       puts 'Account'
       puts @current_account
       puts @pk

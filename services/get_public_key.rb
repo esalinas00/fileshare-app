@@ -13,7 +13,9 @@ class GetPublicKey
 
   def self.extract_publicKey(response)
     # Convert from base64
-    Base64.strict_decode64(response['public_key'])
+    if response['public_key']
+      Base64.strict_decode64(response['public_key'])
+    end
   end
 
 end

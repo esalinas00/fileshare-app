@@ -10,9 +10,6 @@ class ShareFilesApp < Sinatra::Base
         current_account: @current_account,
         auth_token: session[:auth_token])
 
-      puts 'Account'
-      puts @current_account
-      puts @pk
       slim(:account)
     else
       slim(:login)

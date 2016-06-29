@@ -5,6 +5,7 @@ class ShareFilesApp < Sinatra::Base
   get '/accounts/:username' do
     if @current_account && @current_account['username'] == params[:username]
       @auth_token = session[:auth_token]
+      @pk = nil
       slim(:account)
     else
       slim(:login)

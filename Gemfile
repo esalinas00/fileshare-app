@@ -12,7 +12,6 @@ gem 'jose'
 
 gem 'dry-validation'
 gem 'pony'
-
 gem 'faker'
 
 group :development do

@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+Dir.glob('./{config,lib,services,forms,cli}/init.rb').each do |file|
+  require file
+end
+FileSharerCLI.start

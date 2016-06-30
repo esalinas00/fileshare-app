@@ -8,6 +8,12 @@ class GetFolderDetails
     response.code == 200 ? extract_folder_details(response.parse) : nil
   end
 
+  def self.call_by_name(folder_name:, auth_token:)
+    response = HTTP.auth("Bearer #{auth_token}")
+                   .get("#{ENV['API_HOST']}/foldersByName/#{folder_name}")
+    response.code == 200 ? extract_folder_details(response.parse) : nil
+  end
+
   private_class_method
 
   def self.extract_folder_details(folder_data)

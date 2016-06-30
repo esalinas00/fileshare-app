@@ -1,10 +1,10 @@
 class FileSharerCLI < Thor
   
   desc "folder FOLDER_ID", "Show List of Files inside FOLDER_ID"
-  def folder(folder_id)
+  def folder(folder_name)
     if CLIHelper.authenticated?
       session = CLIHelper.get_session
-      folder = GetFolderDetails.call(folder_id: folder_id,
+      folder = GetFolderDetails.call_by_name(folder_name: folder_name,
                                       auth_token: session['auth_token'])
 
       puts '-----------------------------------------------'

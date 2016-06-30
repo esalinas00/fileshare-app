@@ -12,6 +12,13 @@ class GetFileDetails
     response.code == 200 ? download_file(response.parse) : nil
   end
 
+  def self.call_by_name(folder_name:, file_name:)
+    response = HTTP.get("#{ENV['API_HOST']}/foldersByName/#{folder_name}/filesByName/#{file_name}")
+    # puts response.parse
+    # response.code == 200 ? true : nil
+    response.code == 200 ? download_file(response.parse) : nil
+  end
+
   private_class_method
 
   def self.download_file(file_data)

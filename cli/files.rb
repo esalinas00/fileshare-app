@@ -1,3 +1,4 @@
+require 'mimemagic'
 class FileSharerCLI < Thor
   
   desc "dowload FILE_PATH OUTPUT_PATH", "DownloadFile"
@@ -23,6 +24,27 @@ class FileSharerCLI < Thor
 	      flash[:error] = "Could not get that file"
 	      redirect @folder_url
 	    end
+    end
+  end
+
+  desc "upload FOLDER_NAME SOURCE_PATH", "UploadFile"
+  def upload(folder_name, source_path)
+  	begin
+  		file = File.read(source_path)
+  		filename = File.basename(source_path)
+  		type = MimeMagic.by_path(source_path)
+
+      new_file = CreateNewFile.call_by_name(
+        folder_name: folder_name,
+        filename: filename ,
+        description: type,
+        document: file)
+
+      puts 'Here is your new file!'
+      
+    rescue => e
+      puts 'Something went wrong -- we will look into it!'
+      puts e.message
     end
   end
 end

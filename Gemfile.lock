@@ -59,6 +59,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.1)
     pony (1.11)
       mail (>= 2.0)
     puma (3.4.0)
@@ -116,6 +117,7 @@ DEPENDENCIES
   faker
   http
   jose
+  mimemagic
   pony
   puma
   rack-flash3
@@ -131,4 +133,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.12.3
+   1.12.5

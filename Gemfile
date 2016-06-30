@@ -9,7 +9,7 @@ gem 'rack-ssl-enforcer'
 
 gem 'http'
 gem 'jose'
-
+gem 'mimemagic'
 gem 'dry-validation'
 gem 'pony'
 gem 'faker'

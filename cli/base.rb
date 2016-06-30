@@ -6,6 +6,11 @@ class CLIHelper
 		end
   end
 
+  def self.clear_session
+  	File.delete("cli/clitemp.json")
+  	puts '****** THANK OUT FOR USING FILESHARER CLI ******'
+  end
+
   def self.get_session
   	file = File.read('cli/clitemp.json')
 		session = JSON.parse(file)
@@ -18,8 +23,10 @@ class CLIHelper
   def self.authenticated?
   	session = self.get_session
   	if session
+      puts "******   Welcome back #{session['current_account']['username']} ******"
   		true
   	else
+  		puts "Please first use command login to authenticate in filesharer service"
   		false
   	end
   end

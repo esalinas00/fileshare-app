@@ -1,12 +1,19 @@
 class FileSharerCLI < Thor
   
-  desc "folder FOLDERNAME", "Show List of Files inside FOLDERNAME"
-  def folder(foldername)
+  desc "folder FOLDER_ID", "Show List of Files inside FOLDER_ID"
+  def folder(folder_id)
     if CLIHelper.authenticated?
       session = CLIHelper.get_session
-      puts "Welcome back #{session['current_account']['username']}"
-    else
-      puts "Please first use command login to authenticate in filesharer service"
+      folder = GetFolderDetails.call(folder_id: folder_id,
+                                      auth_token: session['auth_token'])
+
+      puts '-----------------------------------------------'
+      puts "-- #{folder['id']}. #{folder['name']}"
+      folder['files'].each do |file|
+        puts "  -- #{file['data']['filename']}"
+      end
+      puts '-----------------------------------------------'
+      
     end
   end
 
@@ -14,9 +21,14 @@ class FileSharerCLI < Thor
   def folders
     if CLIHelper.authenticated?
       session = CLIHelper.get_session
-      puts "Welcome back #{session['current_account']['username']}"
-    else
-      puts "Please first use command login to authenticate in filesharer service"
+      folders = GetAllFolders.call(current_account: session['current_account'],
+                                      auth_token: session['auth_token'])
+
+      puts '---------------List of Folder------------------'
+      folders.each do |folder|
+        puts "-- #{folder[:id]}. #{folder[:name]}"
+      end
+      puts '-----------------------------------------------'
     end
   end
 end

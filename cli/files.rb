@@ -11,13 +11,13 @@ class FileSharerCLI < Thor
 	      filename, temp_file = GetFileDetails.call_by_name(
 	        folder_name: folder_name,
 	        file_name: file_name)
-	      puts "File"
-	      puts filename
-	      puts temp_file
+	      
 	      File.open(output_path,"w") do |f|
 		  		f.truncate(0)
 				  f.write(temp_file.read)
 				end
+
+				puts "File downloaded"
 				temp_file.unlink
 	    rescue => e
 	      logger.error "GET FILE FAILED: #{e}"
